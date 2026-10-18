@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaveVid — Download Videos from YouTube, TikTok, Facebook & 1000+ Sites</title>
+<meta name="description" content="Free online video downloader. Paste a link from YouTube, TikTok, Facebook, Instagram, Twitter and 1000+ sites to download videos in HD quality.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0e1a;--card:#111827;--border:#1f2937;--text:#f3f4f6;--muted:#9ca3af;--accent:#6366f1;--accent2:#8b5cf6;--green:#10b981;--red:#ef4444}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;gap:12px;max-width:1100px;margin:0 auto}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:20px}
+.brand{font-size:20px;font-weight:700}.brand span{color:var(--accent2)}
+main{max-width:760px;margin:0 auto;padding:48px 20px}
+.hero{text-align:center;margin-bottom:36px}
+.hero h1{font-size:clamp(26px,5vw,40px);font-weight:800;margin-bottom:12px;background:linear-gradient(135deg,#fff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--muted);font-size:16px}
+.platforms{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+.platforms span{background:var(--card);border:1px solid var(--border);padding:6px 14px;border-radius:20px;font-size:13px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:24px}
+.input-row{display:flex;gap:10px;flex-wrap:wrap}
+input[type=url]{flex:1;min-width:200px;background:#0b1120;border:1px solid var(--border);border-radius:10px;padding:14px 16px;color:var(--text);font-size:15px;outline:none}
+input[type=url]:focus{border-color:var(--accent)}
+button{cursor:pointer;border:none;border-radius:10px;font-weight:600;font-size:15px;transition:.2s}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:14px 28px}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.5;cursor:wait;transform:none}
+.btn-dl{background:var(--green);color:#fff;padding:10px 20px;font-size:14px;width:100%;margin-top:8px}
+.btn-dl:hover{opacity:.9}
+.result{display:none;margin-top:24px}
+.result.show{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.video-meta{display:flex;gap:16px;margin-bottom:20px}
+.video-meta img{width:160px;height:90px;object-fit:cover;border-radius:10px;background:#000}
+.video-meta h3{font-size:16px;margin-bottom:6px;line-height:1.4}
+.video-meta p{color:var(--muted);font-size:13px}
+.quality-list{display:grid;gap:10px}
+.quality-item{background:#0b1120;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.quality-item .q-label{font-weight:600}
+.quality-item .q-size{color:var(--muted);font-size:13px}
+.quality-item a{flex-shrink:0}
+.error{display:none;background:rgba(239,68,68,.1);border:1px solid var(--red);color:#fca5a5;padding:14px 16px;border-radius:10px;margin-top:16px;font-size:14px}
+.error.show{display:block}
+.loader{display:none;text-align:center;padding:20px;color:var(--muted)}
+.loader.show{display:block}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;margin:0 auto 12px;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:48px}
+.feature{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.feature .icon{font-size:28px;margin-bottom:10px}
+.feature h3{font-size:15px;margin-bottom:6px}
+.feature p{color:var(--muted);font-size:13px;line-height:1.5}
+footer{text-align:center;padding:32px 20px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:48px}
+.how{margin-top:48px}
+.how h2{text-align:center;margin-bottom:24px;font-size:22px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.step{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.step .num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 12px}
+.step p{color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">⬇</div>
+<div class="brand">Save<span>Vid</span></div>
+</header>
+<main>
+<div class="hero">
+<h1>Download Videos from Anywhere</h1>
+<p>Paste a video link below — get HD downloads in seconds. Free, no signup, no watermarks.</p>
+<div class="platforms">
+<span>▶ YouTube</span><span>♪ TikTok</span><span>f Facebook</span><span>📸 Instagram</span><span>𝕏 Twitter/X</span><span>+ 1000 more</span>
+</div>
+</div>
+
+<div class="card">
+<div class="input-row">
+<input type="url" id="urlInput" placeholder="Paste video URL here… (e.g. youtube.com/watch?v=…)">
+<button class="btn-primary" id="fetchBtn" onclick="fetchInfo()">Get Video</button>
+</div>
+<div class="loader" id="loader"><div class="spinner"></div>Fetching video info…</div>
+<div class="error" id="error"></div>
+<div class="result" id="result">
+<div class="video-meta">
+<img id="thumb" src="" alt="">
+<div><h3 id="vTitle"></h3><p id="vMeta"></p></div>
+</div>
+<div class="quality-list" id="qualityList"></div>
+</div>
+</div>
+
+<div class="how">
+<h2>How it works</h2>
+<div class="steps">
+<div class="step"><div class="num">1</div><p>Copy the video link from any supported site</p></div>
+<div class="step"><div class="num">2</div><p>Paste it above and click Get Video</p></div>
+<div class="step"><div class="num">3</div><p>Choose quality and download instantly</p></div>
+</div>
+</div>
+
+<div class="features">
+<div class="feature"><div class="icon">⚡</div><h3>Fast & Free</h3><p>No accounts, no limits, no watermarks. Just paste and download.</p></div>
+<div class="feature"><div class="icon">🎬</div><h3>HD Quality</h3><p>Download in up to 4K where available, or MP3 audio only.</p></div>
+<div class="feature"><div class="icon">🌐</div><h3>1000+ Sites</h3><p>YouTube, TikTok, Facebook, Instagram, Twitter, Vimeo and more.</p></div>
+</div>
+</main>
+<footer>SaveVid — free online video downloader. For personal use only; respect creators' rights.</footer>
+
+<script>
+const API = '';
+async function fetchInfo(){
+  const url = document.getElementById('urlInput').value.trim();
+  const err = document.getElementById('error'), loader = document.getElementById('loader'), result = document.getElementById('result');
+  err.classList.remove('show'); result.classList.remove('show');
+  if(!url){ err.textContent='Please paste a video URL first.'; err.classList.add('show'); return; }
+  const btn = document.getElementById('fetchBtn'); btn.disabled = true; loader.classList.add('show');
+  try{
+    const r = await fetch(API+'/api/info',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url})});
+    const d = await r.json();
+    if(!r.ok) throw new Error(d.error||'Failed to fetch video');
+    document.getElementById('thumb').src = d.thumbnail||'';
+    document.getElementById('vTitle').textContent = d.title||'Video';
+    document.getElementById('vMeta').textContent = [d.uploader,d.duration_string,d.extractor].filter(Boolean).join(' • ');
+    const ql = document.getElementById('qualityList'); ql.innerHTML='';
+    if(!d.qualities||!d.qualities.length){ ql.innerHTML='<p style="color:var(--muted)">No downloadable formats found.</p>'; }
+    d.qualities.forEach(q=>{
+      const size = q.filesize?(' • '+fmtSize(q.filesize)):'';
+      const div = document.createElement('div'); div.className='quality-item';
+      div.innerHTML = `<div><div class="q-label">${esc(q.label)}</div><div class="q-size">${esc(q.ext.toUpperCase())}${size}</div></div>`;
+      const a = document.createElement('a');
+      a.href = API+'/api/download?url='+encodeURIComponent(url)+'&format_id='+encodeURIComponent(q.format_id)+'&type='+q.type;
+      a.innerHTML = '<button class="btn-dl" style="width:auto;margin:0">Download</button>';
+      div.appendChild(a); ql.appendChild(div);
+    });
+    result.classList.add('show');
+  }catch(e){ err.textContent = e.message; err.classList.add('show'); }
+  finally{ btn.disabled=false; loader.classList.remove('show'); }
+}
+function fmtSize(b){ if(b>1e9)return (b/1e9).toFixed(1)+' GB'; if(b>1e6)return (b/1e6).toFixed(0)+' MB'; return Math.round(b/1e3)+' KB'; }
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+document.getElementById('urlInput').addEventListener('keydown',e=>{ if(e.key==='Enter') fetchInfo(); });
+</script>
+</body>
+</html>
